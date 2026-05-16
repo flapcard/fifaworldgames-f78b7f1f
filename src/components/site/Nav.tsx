@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Menu, X, Wallet } from "lucide-react";
+import { Menu, X, Wallet, LogOut } from "lucide-react";
+import { useWallet, PUMP_FUN_URL } from "./wallet/WalletContext";
 
 const links = [
   { label: "Game", href: "#game" },
@@ -12,6 +13,10 @@ const links = [
 
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const { connected, publicKey, openModal, disconnect } = useWallet();
+
+  const short = publicKey ? `${publicKey.slice(0, 4)}…${publicKey.slice(-4)}` : "";
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       <div className="mx-auto max-w-7xl px-4 md:px-6 pt-4">
@@ -36,8 +41,34 @@ export function Nav() {
           </nav>
 
           <div className="hidden md:flex items-center gap-2">
-            <a href="#game" className="px-4 py-2 rounded-xl text-sm font-bold gradient-neon text-background hover:scale-105 transition shadow-[var(--shadow-neon)]">
-              <span className="inline-flex items-center gap-2"><Wallet className="w-4 h-4"/>Connect Wallet</span>
+            {connected ? (
+              <>
+                <span className="px-3 py-2 rounded-xl text-xs font-display tracking-widest glass border border-neon/40 text-neon">
+                  {short}
+                </span>
+                <button
+                  onClick={() => disconnect()}
+                  className="p-2 rounded-xl glass hover:border-destructive/60 transition"
+                  aria-label="Disconnect wallet"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={openModal}
+                className="px-4 py-2 rounded-xl text-sm font-bold gradient-neon text-background hover:scale-105 transition shadow-[var(--shadow-neon)]"
+              >
+                <span className="inline-flex items-center gap-2"><Wallet className="w-4 h-4"/>Connect Wallet</span>
+              </button>
+            )}
+            <a
+              href={PUMP_FUN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 rounded-xl text-sm font-bold glass-strong border border-gold/40 hover:border-gold transition"
+            >
+              <span className="gradient-text-gold">Buy $FWG</span>
             </a>
           </div>
 
@@ -52,8 +83,28 @@ export function Nav() {
               <a key={l.href} href={l.href} onClick={() => setOpen(false)}
                  className="text-sm font-medium text-foreground/90 hover:text-neon transition">{l.label}</a>
             ))}
-            <a href="#game" className="px-4 py-2 rounded-xl text-sm font-bold gradient-neon text-background text-center">
-              Connect Wallet
+            {connected ? (
+              <button
+                onClick={() => { disconnect(); setOpen(false); }}
+                className="px-4 py-2 rounded-xl text-sm font-bold glass-strong text-center"
+              >
+                Disconnect {short}
+              </button>
+            ) : (
+              <button
+                onClick={() => { openModal(); setOpen(false); }}
+                className="px-4 py-2 rounded-xl text-sm font-bold gradient-neon text-background text-center"
+              >
+                Connect Wallet
+              </button>
+            )}
+            <a
+              href={PUMP_FUN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 rounded-xl text-sm font-bold glass-strong text-center"
+            >
+              <span className="gradient-text-gold">Buy $FWG on Pump.fun</span>
             </a>
           </div>
         )}

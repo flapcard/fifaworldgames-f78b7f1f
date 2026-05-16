@@ -1,7 +1,22 @@
 import { Play, Rocket, Sparkles } from "lucide-react";
 import { Countdown } from "./Countdown";
+import { useWallet, PUMP_FUN_URL } from "./wallet/WalletContext";
+import { toast } from "sonner";
 
 export function Hero() {
+  const { connected, openModal, publicKey } = useWallet();
+
+  const handlePlay = () => {
+    if (!connected) {
+      toast("Connect a wallet to play", { description: "Phantom or Solflare required." });
+      openModal();
+      return;
+    }
+    const short = publicKey ? `${publicKey.slice(0, 4)}…${publicKey.slice(-4)}` : "";
+    toast.success("Entering the pitch ⚽", { description: `Playing as ${short}` });
+    document.getElementById("game")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section id="top" className="relative pt-32 md:pt-40 pb-24 overflow-hidden">
       {/* Stadium lights */}
@@ -44,10 +59,18 @@ export function Hero() {
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
-            <a href="#game" className="group relative px-8 py-4 rounded-2xl gradient-neon text-background font-black tracking-wide inline-flex items-center justify-center gap-2 shadow-[var(--shadow-neon)] hover:scale-105 transition">
+            <button
+              onClick={handlePlay}
+              className="group relative px-8 py-4 rounded-2xl gradient-neon text-background font-black tracking-wide inline-flex items-center justify-center gap-2 shadow-[var(--shadow-neon)] hover:scale-105 transition"
+            >
               <Play className="w-5 h-5 fill-background"/> PLAY GAME
-            </a>
-            <a href="#" className="px-8 py-4 rounded-2xl glass-strong font-black tracking-wide inline-flex items-center justify-center gap-2 hover:border-gold/50 transition">
+            </button>
+            <a
+              href={PUMP_FUN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-4 rounded-2xl glass-strong font-black tracking-wide inline-flex items-center justify-center gap-2 hover:border-gold/50 transition"
+            >
               <Rocket className="w-5 h-5 text-gold"/> <span className="gradient-text-gold">BUY ON PUMP.FUN</span>
             </a>
           </div>
