@@ -94,7 +94,12 @@ export function HowItWorks() {
                 </div>
                 <div className="glass rounded-xl px-3 py-2 text-right">
                   <div className="text-[10px] tracking-widest text-muted-foreground">BET</div>
-                  <div className="font-display font-black text-gold">500 $FWG</div>
+                  <div className="font-display font-black text-gold">{BET_AMOUNT} $FWG</div>
+                  <div className="text-[10px] tracking-widest text-muted-foreground mt-1">
+                    BAL: <span className={connected && balance >= BET_AMOUNT ? "text-neon" : "text-destructive"}>
+                      {connected ? (loadingBalance ? "…" : balance.toLocaleString()) : "—"}
+                    </span>
+                  </div>
                 </div>
               </div>
 
