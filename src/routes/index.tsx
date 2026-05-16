@@ -10,6 +10,9 @@ import { Roadmap } from "@/components/site/Roadmap";
 import { Faq } from "@/components/site/Faq";
 import { Footer } from "@/components/site/Footer";
 import { Loader } from "@/components/site/Loader";
+import { WalletProvider } from "@/components/site/wallet/WalletContext";
+import { WalletModal } from "@/components/site/wallet/WalletModal";
+import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -32,20 +35,24 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen">
-      <Loader/>
-      <Nav/>
-      <main>
-        <Hero/>
-        <Ticker/>
-        <HowItWorks/>
-        <Leaderboard/>
-        <Rewards/>
-        <Tokenomics/>
-        <Roadmap/>
-        <Faq/>
-      </main>
-      <Footer/>
-    </div>
+    <WalletProvider>
+      <div className="min-h-screen">
+        <Loader/>
+        <Nav/>
+        <main>
+          <Hero/>
+          <Ticker/>
+          <HowItWorks/>
+          <Leaderboard/>
+          <Rewards/>
+          <Tokenomics/>
+          <Roadmap/>
+          <Faq/>
+        </main>
+        <Footer/>
+        <WalletModal/>
+        <Toaster/>
+      </div>
+    </WalletProvider>
   );
 }
