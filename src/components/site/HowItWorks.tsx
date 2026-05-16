@@ -11,9 +11,11 @@ const steps = [
   { n: "03", icon: Target, title: "Shoot & Score to Earn", body: "Time your shot, beat the keeper, and earn $FWG with multiplier rewards." },
 ];
 
+type Phase = "idle" | "shooting" | "goal";
+
 export function HowItWorks() {
   const { connected, balance, loadingBalance, requireBalance, openModal } = useWallet();
-  const [shooting, setShooting] = useState(false);
+  const [phase, setPhase] = useState<Phase>("idle");
 
   const handleBet = () => {
     if (!connected) {
@@ -22,10 +24,17 @@ export function HowItWorks() {
       return;
     }
     if (!requireBalance(BET_AMOUNT)) return;
-    setShooting(true);
+    setPhase("shooting");
     toast.success(`Bet placed: ${BET_AMOUNT} $FWG`, { description: "Taking your shot…" });
-    setTimeout(() => setShooting(false), 1600);
+    setTimeout(() => {
+      setPhase("goal");
+      toast.success("GOOOAL! +1,700 $FWG", { description: "3.4x multiplier hit 🔥" });
+    }, 1400);
+    setTimeout(() => setPhase("idle"), 3200);
   };
+
+  const shooting = phase === "shooting";
+  const goal = phase === "goal";
 
   return (
     <section id="game" className="relative py-24 md:py-32">
@@ -111,7 +120,22 @@ export function HowItWorks() {
                 {/* Goalkeeper */}
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl animate-bob">🧤</div>
                 {/* Ball */}
-                <div className="absolute right-6 bottom-4 text-3xl animate-float">⚽</div>
+                <div
+                  className={`absolute text-3xl transition-all ease-out ${
+                    shooting
+                      ? "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-150 duration-[1300ms]"
+                      : goal
+                        ? "left-[20%] top-[30%] scale-125 duration-300"
+                        : "right-6 bottom-4 animate-float duration-500"
+                  }`}
+                >
+                  ⚽
+                </div>
+                {goal && (
+                  <div className="absolute inset-0 grid place-items-center font-display font-black text-5xl md:text-6xl gradient-text-gold animate-glow-pulse">
+                    GOAL!
+                  </div>
+                )}
                 {/* Scan */}
                 <div className="absolute inset-x-0 top-0 h-px bg-neon shadow-[0_0_20px_var(--neon)] animate-scan"/>
               </div>
@@ -129,11 +153,11 @@ export function HowItWorks() {
               {/* Bet button */}
               <button
                 onClick={handleBet}
-                disabled={shooting}
+                disabled={shooting || goal}
                 className="mt-6 w-full px-5 py-4 rounded-2xl gradient-neon text-background font-display font-black tracking-widest inline-flex items-center justify-center gap-2 shadow-[var(--shadow-neon)] hover:scale-[1.01] transition disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 <Flame className="w-5 h-5" />
-                {shooting ? "TAKING SHOT…" : `PLACE BET · ${BET_AMOUNT} $FWG`}
+                {shooting ? "TAKING SHOT…" : goal ? "GOAL! +1,700 $FWG" : `PLACE BET · ${BET_AMOUNT} $FWG`}
               </button>
 
               {/* Reward popup */}
