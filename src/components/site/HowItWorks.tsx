@@ -12,6 +12,21 @@ const steps = [
 ];
 
 export function HowItWorks() {
+  const { connected, balance, loadingBalance, requireBalance, openModal } = useWallet();
+  const [shooting, setShooting] = useState(false);
+
+  const handleBet = () => {
+    if (!connected) {
+      toast("Connect a wallet to bet", { description: "Phantom or Solflare required." });
+      openModal();
+      return;
+    }
+    if (!requireBalance(BET_AMOUNT)) return;
+    setShooting(true);
+    toast.success(`Bet placed: ${BET_AMOUNT} $FWG`, { description: "Taking your shot…" });
+    setTimeout(() => setShooting(false), 1600);
+  };
+
   return (
     <section id="game" className="relative py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
