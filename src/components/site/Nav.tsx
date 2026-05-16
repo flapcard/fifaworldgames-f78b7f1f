@@ -13,9 +13,10 @@ const links = [
 
 export function Nav() {
   const [open, setOpen] = useState(false);
-  const { connected, publicKey, openModal, disconnect } = useWallet();
+  const { connected, publicKey, openModal, disconnect, balance, loadingBalance } = useWallet();
 
   const short = publicKey ? `${publicKey.slice(0, 4)}…${publicKey.slice(-4)}` : "";
+  const fmtBal = loadingBalance ? "…" : balance.toLocaleString();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
@@ -43,6 +44,10 @@ export function Nav() {
           <div className="hidden md:flex items-center gap-2">
             {connected ? (
               <>
+                <span className="hidden xl:inline-flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-display tracking-widest glass border border-gold/40">
+                  <span className="text-gold">{fmtBal}</span>
+                  <span className="text-muted-foreground">$FWG</span>
+                </span>
                 <span className="px-3 py-2 rounded-xl text-xs font-display tracking-widest glass border border-neon/40 text-neon">
                   {short}
                 </span>

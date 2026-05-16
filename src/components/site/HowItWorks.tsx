@@ -1,4 +1,9 @@
-import { Wallet, Users, Target, Trophy, Coins, Zap } from "lucide-react";
+import { Wallet, Users, Target, Trophy, Coins, Zap, Flame } from "lucide-react";
+import { useState } from "react";
+import { useWallet } from "./wallet/WalletContext";
+import { toast } from "sonner";
+
+const BET_AMOUNT = 500;
 
 const steps = [
   { n: "01", icon: Wallet, title: "Connect Wallet", body: "Link your Phantom or Solflare wallet in one click and enter the pitch." },
@@ -7,6 +12,21 @@ const steps = [
 ];
 
 export function HowItWorks() {
+  const { connected, balance, loadingBalance, requireBalance, openModal } = useWallet();
+  const [shooting, setShooting] = useState(false);
+
+  const handleBet = () => {
+    if (!connected) {
+      toast("Connect a wallet to bet", { description: "Phantom or Solflare required." });
+      openModal();
+      return;
+    }
+    if (!requireBalance(BET_AMOUNT)) return;
+    setShooting(true);
+    toast.success(`Bet placed: ${BET_AMOUNT} $FWG`, { description: "Taking your shot…" });
+    setTimeout(() => setShooting(false), 1600);
+  };
+
   return (
     <section id="game" className="relative py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
@@ -74,7 +94,12 @@ export function HowItWorks() {
                 </div>
                 <div className="glass rounded-xl px-3 py-2 text-right">
                   <div className="text-[10px] tracking-widest text-muted-foreground">BET</div>
-                  <div className="font-display font-black text-gold">500 $FWG</div>
+                  <div className="font-display font-black text-gold">{BET_AMOUNT} $FWG</div>
+                  <div className="text-[10px] tracking-widest text-muted-foreground mt-1">
+                    BAL: <span className={connected && balance >= BET_AMOUNT ? "text-neon" : "text-destructive"}>
+                      {connected ? (loadingBalance ? "…" : balance.toLocaleString()) : "—"}
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -101,12 +126,22 @@ export function HowItWorks() {
                 </div>
               </div>
 
+              {/* Bet button */}
+              <button
+                onClick={handleBet}
+                disabled={shooting}
+                className="mt-6 w-full px-5 py-4 rounded-2xl gradient-neon text-background font-display font-black tracking-widest inline-flex items-center justify-center gap-2 shadow-[var(--shadow-neon)] hover:scale-[1.01] transition disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                <Flame className="w-5 h-5" />
+                {shooting ? "TAKING SHOT…" : `PLACE BET · ${BET_AMOUNT} $FWG`}
+              </button>
+
               {/* Reward popup */}
-              <div className="mt-6 glass rounded-2xl p-4 flex items-center justify-between animate-glow-pulse">
+              <div className="mt-4 glass rounded-2xl p-4 flex items-center justify-between animate-glow-pulse">
                 <div className="flex items-center gap-3">
                   <Trophy className="w-6 h-6 text-gold"/>
                   <div>
-                    <div className="font-display font-black">GOAL!</div>
+                    <div className="font-display font-black">LAST GOAL!</div>
                     <div className="text-xs text-muted-foreground">3.4x multiplier hit</div>
                   </div>
                 </div>
