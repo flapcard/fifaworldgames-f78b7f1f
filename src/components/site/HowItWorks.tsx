@@ -1,4 +1,9 @@
-import { Wallet, Users, Target, Trophy, Coins, Zap } from "lucide-react";
+import { Wallet, Users, Target, Trophy, Coins, Zap, Flame } from "lucide-react";
+import { useState } from "react";
+import { useWallet } from "./wallet/WalletContext";
+import { toast } from "sonner";
+
+const BET_AMOUNT = 500;
 
 const steps = [
   { n: "01", icon: Wallet, title: "Connect Wallet", body: "Link your Phantom or Solflare wallet in one click and enter the pitch." },
