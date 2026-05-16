@@ -126,12 +126,22 @@ export function HowItWorks() {
                 </div>
               </div>
 
+              {/* Bet button */}
+              <button
+                onClick={handleBet}
+                disabled={shooting}
+                className="mt-6 w-full px-5 py-4 rounded-2xl gradient-neon text-background font-display font-black tracking-widest inline-flex items-center justify-center gap-2 shadow-[var(--shadow-neon)] hover:scale-[1.01] transition disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                <Flame className="w-5 h-5" />
+                {shooting ? "TAKING SHOT…" : `PLACE BET · ${BET_AMOUNT} $FWG`}
+              </button>
+
               {/* Reward popup */}
-              <div className="mt-6 glass rounded-2xl p-4 flex items-center justify-between animate-glow-pulse">
+              <div className="mt-4 glass rounded-2xl p-4 flex items-center justify-between animate-glow-pulse">
                 <div className="flex items-center gap-3">
                   <Trophy className="w-6 h-6 text-gold"/>
                   <div>
-                    <div className="font-display font-black">GOAL!</div>
+                    <div className="font-display font-black">LAST GOAL!</div>
                     <div className="text-xs text-muted-foreground">3.4x multiplier hit</div>
                   </div>
                 </div>
