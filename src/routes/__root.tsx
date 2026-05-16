@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Fifa World Games | Play. Score. Earn." },
+      { name: "description", content: "Predict your shot, score goals, and earn $FWG rewards on Solana during the biggest football hype season in the world." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Fifa World Games | Play. Score. Earn." },
+      { property: "og:description", content: "Predict your shot, score goals, and earn $FWG rewards on Solana during the biggest football hype season in the world." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Fifa World Games | Play. Score. Earn." },
+      { name: "twitter:description", content: "Predict your shot, score goals, and earn $FWG rewards on Solana during the biggest football hype season in the world." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b89cb4f5-eab4-48de-925d-1bc26b013728/id-preview-a88b4f3a--e9eceaa3-99e9-40cf-a25a-99ce5edd49ee.lovable.app-1778959095148.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b89cb4f5-eab4-48de-925d-1bc26b013728/id-preview-a88b4f3a--e9eceaa3-99e9-40cf-a25a-99ce5edd49ee.lovable.app-1778959095148.png" },
     ],
     links: [
       {
