@@ -12,6 +12,7 @@ import { Footer } from "@/components/site/Footer";
 import { Loader } from "@/components/site/Loader";
 import { WalletProvider } from "@/components/site/wallet/WalletContext";
 import { WalletModal } from "@/components/site/wallet/WalletModal";
+import { BuyTokensModal } from "@/components/site/wallet/BuyTokensModal";
 import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createFileRoute("/")({
@@ -51,6 +52,7 @@ function Index() {
         </main>
         <Footer/>
         <WalletModal/>
+        <BuyTokensModal/>
         <Toaster/>
       </div>
     </WalletProvider>
