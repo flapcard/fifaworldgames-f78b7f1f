@@ -64,10 +64,15 @@ export function Footer() {
           </div>
 
           <div className="flex items-center gap-3">
-            {[X, Tg, Dc].map((Icon, i) => (
+            {[
+              { Icon: X, href: "https://x.com/fifaworldgames" },
+              { Icon: Tg, href: "https://t.me/FifaWorldGames" },
+              { Icon: Dc, href: "#" },
+            ].map((Icon, i) => (
               <a
                 key={i}
-                href="https://x.com/fifaworldgames"
+                href={href}
+                target="_blank"
                 className="h-10 w-10 rounded-xl glass grid place-items-center text-foreground/70 hover:text-neon hover:border-neon/60 transition"
               >
                 <Icon />
