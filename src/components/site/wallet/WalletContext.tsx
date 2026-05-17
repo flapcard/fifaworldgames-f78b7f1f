@@ -198,7 +198,23 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       connect,
       disconnect,
     }),
-    [publicKey, connecting, walletName, balance, loadingBalance, refreshBalance, hasSufficientBalance, requireBalance, modalOpen, buyModalOpen, buyShortfall, openBuyModal, closeBuyModal, connect, disconnect],
+    [
+      publicKey,
+      connecting,
+      walletName,
+      balance,
+      loadingBalance,
+      refreshBalance,
+      hasSufficientBalance,
+      requireBalance,
+      modalOpen,
+      buyModalOpen,
+      buyShortfall,
+      openBuyModal,
+      closeBuyModal,
+      connect,
+      disconnect,
+    ],
   );
 
   return <WalletCtx.Provider value={value}>{children}</WalletCtx.Provider>;
@@ -218,4 +234,4 @@ export function creditMockBalance(publicKey: string, amount: number) {
   return next;
 }
 
-export const PUMP_FUN_URL = "https://pump.fun/board";
+export const PUMP_FUN_URL = "https://pump.fun/coin/BpCtEctYSsbgef5SS2er9siX2owAuBBoQrKFVMMVpump";
