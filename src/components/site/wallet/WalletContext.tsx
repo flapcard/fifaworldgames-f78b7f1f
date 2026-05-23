@@ -234,4 +234,4 @@ export function creditMockBalance(publicKey: string, amount: number) {
   return next;
 }
 
-export const PUMP_FUN_URL = "https://pump.fun/";
+export const PUMP_FUN_URL = "https://pump.fun/coin/9XafPZZcXwy1Ya3wor9xuqajENAjUHAbEasCSUrKpump";
