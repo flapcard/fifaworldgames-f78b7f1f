@@ -41,12 +41,17 @@ export function Hero() {
 
       <div className="relative mx-auto max-w-7xl px-4 md:px-6">
         <div className="flex flex-col items-center text-center">
-          <div className="glass rounded-full px-4 py-1.5 inline-flex items-center gap-2 text-xs font-display tracking-widest mb-6">
+          <a
+            href={PANCAKESWAP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="glass rounded-full px-4 py-1.5 inline-flex items-center gap-2 text-xs font-display tracking-widest mb-6 hover:border-neon/60 transition"
+          >
             <Sparkles className="w-3.5 h-3.5 text-gold"/>
-            <span className="text-gold">FAIR LAUNCH</span>
+            <span className="text-gold">LIVE</span>
             <span className="text-muted-foreground">·</span>
-            <span className="text-neon">LIVE ON PANCAKESWAP</span>
-          </div>
+            <span className="text-neon">BUY $FWG ON PANCAKESWAP</span>
+          </a>
 
           <h1 className="font-display font-black text-6xl md:text-8xl lg:text-9xl leading-[0.9] tracking-tight">
             <span className="gradient-text-neon text-glow">PLAY.</span>{" "}
@@ -71,9 +76,19 @@ export function Hero() {
               rel="noopener noreferrer"
               className="px-8 py-4 rounded-2xl glass-strong font-black tracking-wide inline-flex items-center justify-center gap-2 hover:border-gold/50 transition"
             >
-              <Rocket className="w-5 h-5 text-gold"/> <span className="gradient-text-gold">BUY ON PANCAKESWAP</span>
+              <Rocket className="w-5 h-5 text-gold"/> <span className="gradient-text-gold">BUY $FWG ON PANCAKESWAP</span>
             </a>
           </div>
+
+          <a
+            href={BSCSCAN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center gap-1.5 text-[11px] font-display tracking-[0.3em] text-muted-foreground hover:text-neon transition"
+          >
+            VERIFIED CONTRACT ON BSCSCAN <ExternalLink className="w-3 h-3" />
+          </a>
+
 
           {/* Stat bar */}
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 w-full max-w-4xl">
