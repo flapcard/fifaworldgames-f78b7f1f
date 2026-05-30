@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Menu, X, Wallet, LogOut } from "lucide-react";
-import { useWallet, PANCAKESWAP_URL } from "./wallet/WalletContext";
+import { Menu, X, Wallet, LogOut, ExternalLink } from "lucide-react";
+import { useWallet, PANCAKESWAP_URL, BSCSCAN_URL } from "./wallet/WalletContext";
 
 const links = [
   { label: "Game", href: "#game" },
