@@ -1,22 +1,23 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { toast } from "sonner";
 
-type WalletName = "phantom" | "solflare";
+type WalletName = "metamask" | "trustwallet";
 
-type SolanaProvider = {
-  publicKey?: { toString(): string };
-  isPhantom?: boolean;
-  isSolflare?: boolean;
-  connect: (opts?: { onlyIfTrusted?: boolean }) => Promise<{ publicKey: { toString(): string } }>;
-  disconnect: () => Promise<void>;
+type EthRequestArgs = { method: string; params?: unknown[] };
+
+type EthereumProvider = {
+  isMetaMask?: boolean;
+  isTrust?: boolean;
+  isTrustWallet?: boolean;
+  providers?: EthereumProvider[];
+  request: (args: EthRequestArgs) => Promise<unknown>;
   on?: (event: string, cb: (...args: unknown[]) => void) => void;
   removeListener?: (event: string, cb: (...args: unknown[]) => void) => void;
 };
 
-type WindowWithWallets = Window & {
-  solana?: SolanaProvider;
-  phantom?: { solana?: SolanaProvider };
-  solflare?: SolanaProvider;
+type WindowWithEthereum = Window & {
+  ethereum?: EthereumProvider;
+  trustwallet?: EthereumProvider;
 };
 
 type Ctx = {
@@ -42,30 +43,65 @@ type Ctx = {
 
 const WalletCtx = createContext<Ctx | null>(null);
 
-function getProvider(name: WalletName): SolanaProvider | undefined {
+// BNB Smart Chain mainnet
+const BSC_CHAIN_ID = "0x38"; // 56
+const BSC_PARAMS = {
+  chainId: BSC_CHAIN_ID,
+  chainName: "BNB Smart Chain",
+  nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
+  rpcUrls: ["https://bsc-dataseed.binance.org/"],
+  blockExplorerUrls: ["https://bscscan.com"],
+};
+
+function getProvider(name: WalletName): EthereumProvider | undefined {
   if (typeof window === "undefined") return undefined;
-  const w = window as WindowWithWallets;
-  if (name === "phantom") {
-    const p = w.phantom?.solana ?? w.solana;
-    return p?.isPhantom ? p : undefined;
+  const w = window as WindowWithEthereum;
+  const eth = w.ethereum;
+  if (!eth) return undefined;
+
+  // EIP-5749: multiple injected providers
+  const candidates: EthereumProvider[] = eth.providers?.length ? eth.providers : [eth];
+
+  if (name === "metamask") {
+    return candidates.find((p) => p.isMetaMask && !p.isTrust && !p.isTrustWallet) ?? (eth.isMetaMask ? eth : undefined);
   }
-  return w.solflare?.isSolflare ? w.solflare : undefined;
+  // trustwallet
+  return (
+    candidates.find((p) => p.isTrust || p.isTrustWallet) ??
+    w.trustwallet ??
+    (eth.isTrust || eth.isTrustWallet ? eth : undefined)
+  );
 }
 
 const INSTALL_URL: Record<WalletName, string> = {
-  phantom: "https://phantom.app/",
-  solflare: "https://solflare.com/",
+  metamask: "https://metamask.io/download/",
+  trustwallet: "https://trustwallet.com/download",
 };
 
-// Mock $FWG balance lookup. Replace with on-chain SPL token balance read once
-// the $FWG mint address is finalized. Persists per-wallet in localStorage.
+const WALLET_LABEL: Record<WalletName, string> = {
+  metamask: "MetaMask",
+  trustwallet: "Trust Wallet",
+};
+
+// Mock $FWG balance lookup. Replace with on-chain BEP-20 token balance read once
+// the $FWG contract address is deployed. Persists per-wallet in localStorage.
 async function fetchMockBalance(publicKey: string): Promise<number> {
   await new Promise((r) => setTimeout(r, 400));
   const stored = localStorage.getItem(`fwg:balance:${publicKey}`);
   if (stored !== null) return Number(stored);
-  // New wallets start empty so the buy flow is exercised on first play
   localStorage.setItem(`fwg:balance:${publicKey}`, "0");
   return 0;
+}
+
+async function ensureBscNetwork(provider: EthereumProvider) {
+  try {
+    await provider.request({ method: "wallet_switchEthereumChain", params: [{ chainId: BSC_CHAIN_ID }] });
+  } catch (err) {
+    const code = (err as { code?: number })?.code;
+    if (code === 4902) {
+      await provider.request({ method: "wallet_addEthereumChain", params: [BSC_PARAMS] });
+    }
+  }
 }
 
 export function WalletProvider({ children }: { children: ReactNode }) {
@@ -95,35 +131,31 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     const provider = getProvider(stored);
     if (!provider) return;
     provider
-      .connect({ onlyIfTrusted: true })
-      .then((res) => {
-        const key = res.publicKey.toString();
-        setPublicKey(key);
-        setWalletName(stored);
-        loadBalance(key);
+      .request({ method: "eth_accounts" })
+      .then((accounts) => {
+        const list = accounts as string[];
+        if (list && list[0]) {
+          setPublicKey(list[0]);
+          setWalletName(stored);
+          loadBalance(list[0]);
+        }
       })
       .catch(() => {});
   }, [loadBalance]);
 
   const disconnect = useCallback(async () => {
-    if (walletName) {
-      const provider = getProvider(walletName);
-      try {
-        await provider?.disconnect();
-      } catch {}
-    }
     localStorage.removeItem("fwg:wallet");
     setPublicKey(null);
     setWalletName(null);
     setBalance(0);
     toast("Wallet disconnected");
-  }, [walletName]);
+  }, []);
 
   const connect = useCallback(
     async (name: WalletName) => {
       const provider = getProvider(name);
       if (!provider) {
-        toast.error(`${name === "phantom" ? "Phantom" : "Solflare"} not detected`, {
+        toast.error(`${WALLET_LABEL[name]} not detected`, {
           description: "Install the wallet extension to continue.",
           action: { label: "Install", onClick: () => window.open(INSTALL_URL[name], "_blank") },
         });
@@ -131,13 +163,15 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       }
       try {
         setConnecting(true);
-        const res = await provider.connect();
-        const key = res.publicKey.toString();
+        const accounts = (await provider.request({ method: "eth_requestAccounts" })) as string[];
+        const key = accounts?.[0];
+        if (!key) throw new Error("No account returned");
+        await ensureBscNetwork(provider);
         setPublicKey(key);
         setWalletName(name);
         localStorage.setItem("fwg:wallet", name);
         setModalOpen(false);
-        toast.success("Wallet connected", { description: `${key.slice(0, 4)}…${key.slice(-4)}` });
+        toast.success("Wallet connected", { description: `${key.slice(0, 6)}…${key.slice(-4)}` });
         await loadBalance(key);
       } catch (e) {
         toast.error("Connection rejected", { description: e instanceof Error ? e.message : "Try again" });
@@ -163,7 +197,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const requireBalance = useCallback(
     (amount: number) => {
       if (!publicKey) {
-        toast("Connect a wallet to play", { description: "Phantom or Solflare required." });
+        toast("Connect a wallet to play", { description: "MetaMask or Trust Wallet required." });
         setModalOpen(true);
         return false;
       }
@@ -226,7 +260,7 @@ export function useWallet() {
   return ctx;
 }
 
-// Dev helper: simulate acquiring tokens after the user "buys" on Pump.fun.
+// Dev helper: simulate acquiring tokens after the user "buys" on PancakeSwap.
 export function creditMockBalance(publicKey: string, amount: number) {
   const cur = Number(localStorage.getItem(`fwg:balance:${publicKey}`) ?? 0);
   const next = cur + amount;
@@ -234,4 +268,9 @@ export function creditMockBalance(publicKey: string, amount: number) {
   return next;
 }
 
-export const PUMP_FUN_URL = "https://pump.fun/coin/9XafPZZcXwy1Ya3wor9xuqajENAjUHAbEasCSUrKpump";
+// Replace with the deployed $FWG BEP-20 contract address once live.
+export const PANCAKESWAP_URL =
+  "https://pancakeswap.finance/swap?outputCurrency=0x0000000000000000000000000000000000000000";
+
+// Back-compat alias for any straggling imports.
+export const PUMP_FUN_URL = PANCAKESWAP_URL;
