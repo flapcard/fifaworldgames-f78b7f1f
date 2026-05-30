@@ -71,9 +71,18 @@ export function Nav() {
               href={PANCAKESWAP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 rounded-xl text-sm font-bold glass-strong border border-gold/40 hover:border-gold transition"
+              className="px-4 py-2 rounded-xl text-sm font-bold glass-strong border border-gold/40 hover:border-gold transition inline-flex items-center gap-2"
             >
-              <span className="gradient-text-gold">Buy $FWG</span>
+              <span className="gradient-text-gold">Buy $FWG on PancakeSwap</span>
+            </a>
+            <a
+              href={BSCSCAN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="View contract on BscScan"
+              className="p-2 rounded-xl glass-strong border border-neon/20 hover:border-neon transition text-muted-foreground hover:text-neon"
+            >
+              <ExternalLink className="w-4 h-4" />
             </a>
           </div>
 
