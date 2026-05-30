@@ -1,6 +1,6 @@
-import { Play, Rocket, Sparkles } from "lucide-react";
+import { Play, Rocket, Sparkles, ExternalLink } from "lucide-react";
 import { Countdown } from "./Countdown";
-import { useWallet, PANCAKESWAP_URL } from "./wallet/WalletContext";
+import { useWallet, PANCAKESWAP_URL, BSCSCAN_URL } from "./wallet/WalletContext";
 import { toast } from "sonner";
 
 export function Hero() {
