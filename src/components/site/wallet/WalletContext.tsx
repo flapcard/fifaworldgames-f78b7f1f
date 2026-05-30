@@ -270,8 +270,7 @@ export function creditMockBalance(publicKey: string, amount: number) {
 
 // $FWG BEP-20 token contract on BNB Smart Chain.
 // TODO: replace with the deployed mainnet address at launch.
-export const FWG_CONTRACT_ADDRESS = "0x000000000000000000000000000000000000dEaD";
+export const FWG_CONTRACT_ADDRESS = "0x251e949a9cce824d49db82692bb3c87e0d667777";
 
 export const PANCAKESWAP_URL = `https://pancakeswap.finance/swap?outputCurrency=${FWG_CONTRACT_ADDRESS}&chain=bsc`;
 export const BSCSCAN_URL = `https://bscscan.com/token/${FWG_CONTRACT_ADDRESS}`;
-
