@@ -6,7 +6,7 @@ import { toast } from "sonner";
 const BET_AMOUNT = 500;
 
 const steps = [
-  { n: "01", icon: Wallet, title: "Connect Wallet", body: "Link your Phantom or Solflare wallet in one click and enter the pitch." },
+  { n: "01", icon: Wallet, title: "Connect Wallet", body: "Link your MetaMask or Trust Wallet wallet in one click and enter the pitch." },
   { n: "02", icon: Users, title: "Choose Your Player", body: "Pick a striker — each with unique power, accuracy, and curve stats." },
   { n: "03", icon: Target, title: "Shoot & Score to Earn", body: "Time your shot, beat the keeper, and earn $FWG with multiplier rewards." },
 ];
@@ -19,7 +19,7 @@ export function HowItWorks() {
 
   const handleBet = () => {
     if (!connected) {
-      toast("Connect a wallet to bet", { description: "Phantom or Solflare required." });
+      toast("Connect a wallet to bet", { description: "MetaMask or Trust Wallet required." });
       openModal();
       return;
     }
@@ -45,7 +45,7 @@ export function HowItWorks() {
             HOW THE <span className="gradient-text-neon">GAME</span> WORKS
           </h2>
           <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-            Three simple steps. Infinite degen energy. Built on Solana for instant, on-chain rewards.
+            Three simple steps. Infinite degen energy. Built on BNB Chain for instant, on-chain rewards.
           </p>
         </div>
 

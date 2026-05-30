@@ -59,7 +59,7 @@ export function Footer() {
             <div className="h-9 w-9 rounded-xl gradient-neon grid place-items-center text-background">⚽</div>
             <div>
               <div className="font-display font-black text-sm">FIFA WORLD GAMES</div>
-              <div className="text-xs text-muted-foreground">Built for football fans and degens on Solana.</div>
+              <div className="text-xs text-muted-foreground">Built for football fans and degens on BNB Chain.</div>
             </div>
           </div>
 

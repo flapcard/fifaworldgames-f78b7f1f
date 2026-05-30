@@ -1,7 +1,7 @@
 const phases = [
   {
     p: "PHASE 1", t: "Kickoff", color: "var(--neon)",
-    items: ["Launch on Pump.fun", "Website release", "Community building", "Wallet integration"],
+    items: ["Launch on PancakeSwap", "Website release", "Community building", "Wallet integration"],
   },
   {
     p: "PHASE 2", t: "Game On", color: "var(--gold)",
@@ -9,7 +9,7 @@ const phases = [
   },
   {
     p: "PHASE 3", t: "World Stage", color: "var(--electric)",
-    items: ["NFT football skins", "PvP tournaments", "Seasonal World Cup events", "Solana ecosystem partnerships"],
+    items: ["NFT football skins", "PvP tournaments", "Seasonal World Cup events", "BNB Chain ecosystem partnerships"],
   },
 ];
 

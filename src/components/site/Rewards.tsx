@@ -3,10 +3,10 @@ import { Users, Lock, Sparkles, Heart, Shield, Zap } from "lucide-react";
 const points = [
   { icon: Users, t: "100% Community Allocation", b: "All developer tokens go directly to the community reward pool." },
   { icon: Lock, t: "No Private Sale", b: "No insiders, no VCs, no shady allocations. Fair from day one." },
-  { icon: Sparkles, t: "Fair Launch on Pump.fun", b: "Bonded curve launch — everyone gets the same shot." },
+  { icon: Sparkles, t: "Fair Launch on PancakeSwap", b: "Bonded curve launch — everyone gets the same shot." },
   { icon: Heart, t: "Community-First", b: "Top players earn from a transparent on-chain pool." },
   { icon: Shield, t: "No Team Dump", b: "Liquidity locked. Team wallet renounced. Built to last." },
-  { icon: Zap, t: "Instant Solana Payouts", b: "Sub-second rewards, paid straight to your wallet." },
+  { icon: Zap, t: "Instant BNB Chain Payouts", b: "Sub-second rewards, paid straight to your wallet." },
 ];
 
 export function Rewards() {

@@ -3,8 +3,8 @@ import { useWallet } from "./WalletContext";
 import { Loader2 } from "lucide-react";
 
 const WALLETS = [
-  { id: "phantom" as const, name: "Phantom", emoji: "👻", tag: "Most popular" },
-  { id: "solflare" as const, name: "Solflare", emoji: "🔥", tag: "Solana native" },
+  { id: "metamask" as const, name: "MetaMask", emoji: "🦊", tag: "Most popular" },
+  { id: "trustwallet" as const, name: "Trust Wallet", emoji: "🛡️", tag: "BNB Chain native" },
 ];
 
 export function WalletModal() {
@@ -16,7 +16,7 @@ export function WalletModal() {
           <DialogTitle className="font-display tracking-wider text-2xl">
             <span className="gradient-text-neon">CONNECT</span> WALLET
           </DialogTitle>
-          <DialogDescription>Choose a Solana wallet to enter the pitch.</DialogDescription>
+          <DialogDescription>Choose a BNB Smart Chain wallet to enter the pitch.</DialogDescription>
         </DialogHeader>
         <div className="grid gap-3 mt-2">
           {WALLETS.map((w) => {
