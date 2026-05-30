@@ -1,6 +1,6 @@
 import { Play, Rocket, Sparkles } from "lucide-react";
 import { Countdown } from "./Countdown";
-import { useWallet, PUMP_FUN_URL } from "./wallet/WalletContext";
+import { useWallet, PANCAKESWAP_URL } from "./wallet/WalletContext";
 import { toast } from "sonner";
 
 export function Hero() {
@@ -8,7 +8,7 @@ export function Hero() {
 
   const handlePlay = () => {
     if (!connected) {
-      toast("Connect a wallet to play", { description: "Phantom or Solflare required." });
+      toast("Connect a wallet to play", { description: "MetaMask or Trust Wallet required." });
       openModal();
       return;
     }
@@ -45,7 +45,7 @@ export function Hero() {
             <Sparkles className="w-3.5 h-3.5 text-gold"/>
             <span className="text-gold">FAIR LAUNCH</span>
             <span className="text-muted-foreground">·</span>
-            <span className="text-neon">LIVE ON PUMP.FUN</span>
+            <span className="text-neon">LIVE ON PANCAKESWAP</span>
           </div>
 
           <h1 className="font-display font-black text-6xl md:text-8xl lg:text-9xl leading-[0.9] tracking-tight">
@@ -55,7 +55,7 @@ export function Hero() {
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg md:text-xl text-muted-foreground">
-            Predict your shot, score goals, and earn <span className="text-neon font-bold">$FWG</span> rewards on Solana during the biggest football hype season in the world.
+            Predict your shot, score goals, and earn <span className="text-neon font-bold">$FWG</span> rewards on BNB Chain during the biggest football hype season in the world.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
@@ -66,12 +66,12 @@ export function Hero() {
               <Play className="w-5 h-5 fill-background"/> PLAY GAME
             </button>
             <a
-              href={PUMP_FUN_URL}
+              href={PANCAKESWAP_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 rounded-2xl glass-strong font-black tracking-wide inline-flex items-center justify-center gap-2 hover:border-gold/50 transition"
             >
-              <Rocket className="w-5 h-5 text-gold"/> <span className="gradient-text-gold">BUY ON PUMP.FUN</span>
+              <Rocket className="w-5 h-5 text-gold"/> <span className="gradient-text-gold">BUY ON PANCAKESWAP</span>
             </a>
           </div>
 

@@ -18,10 +18,10 @@ import { Toaster } from "@/components/ui/sonner";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "FIFA WORLD GAMES ($FWG) — Play. Score. Earn. on Solana" },
-      { name: "description", content: "Predict your shot, score goals, and earn $FWG rewards on Solana during the FIFA World Cup 2026 season. Fair launch on Pump.fun." },
-      { property: "og:title", content: "FIFA WORLD GAMES ($FWG) — Solana Penalty Shootout" },
-      { property: "og:description", content: "Play-to-earn penalty shootout on Solana. Fair launch on Pump.fun. 100% community rewards." },
+      { title: "FIFA WORLD GAMES ($FWG) — Play. Score. Earn. on BNB Chain" },
+      { name: "description", content: "Predict your shot, score goals, and earn $FWG rewards on BNB Chain during the FIFA World Cup 2026 season. Fair launch on PancakeSwap." },
+      { property: "og:title", content: "FIFA WORLD GAMES ($FWG) — BNB Chain Penalty Shootout" },
+      { property: "og:description", content: "Play-to-earn penalty shootout on BNB Chain. Fair launch on PancakeSwap. 100% community rewards." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

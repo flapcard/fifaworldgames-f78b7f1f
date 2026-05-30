@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Menu, X, Wallet, LogOut } from "lucide-react";
-import { useWallet, PUMP_FUN_URL } from "./wallet/WalletContext";
+import { useWallet, PANCAKESWAP_URL } from "./wallet/WalletContext";
 
 const links = [
   { label: "Game", href: "#game" },
@@ -28,7 +28,7 @@ export function Nav() {
             </div>
             <div className="leading-none">
               <div className="font-display font-black text-sm md:text-base tracking-wider">FIFA WORLD GAMES</div>
-              <div className="text-[10px] text-neon tracking-[0.3em] font-display">$FWG · SOLANA</div>
+              <div className="text-[10px] text-neon tracking-[0.3em] font-display">$FWG · BNB CHAIN</div>
             </div>
           </a>
 
@@ -68,7 +68,7 @@ export function Nav() {
               </button>
             )}
             <a
-              href={PUMP_FUN_URL}
+              href={PANCAKESWAP_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 rounded-xl text-sm font-bold glass-strong border border-gold/40 hover:border-gold transition"
@@ -104,12 +104,12 @@ export function Nav() {
               </button>
             )}
             <a
-              href={PUMP_FUN_URL}
+              href={PANCAKESWAP_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 rounded-xl text-sm font-bold glass-strong text-center"
             >
-              <span className="gradient-text-gold">Buy $FWG on Pump.fun</span>
+              <span className="gradient-text-gold">Buy $FWG on PancakeSwap</span>
             </a>
           </div>
         )}

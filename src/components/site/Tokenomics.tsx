@@ -8,9 +8,9 @@ const slices = [
 const details = [
   ["Token Name", "FIFA WORLD GAMES"],
   ["Symbol", "$FWG"],
-  ["Blockchain", "Solana"],
+  ["Blockchain", "BNB Chain"],
   ["Total Supply", "1,000,000,000"],
-  ["Launch Platform", "Pump.fun"],
+  ["Launch Platform", "PancakeSwap"],
 ];
 
 function Donut() {

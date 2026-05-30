@@ -1,5 +1,5 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { useWallet, PUMP_FUN_URL, creditMockBalance } from "./WalletContext";
+import { useWallet, PANCAKESWAP_URL, creditMockBalance } from "./WalletContext";
 import { AlertTriangle, ExternalLink, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
@@ -28,7 +28,7 @@ export function BuyTokensModal() {
             INSUFFICIENT <span className="gradient-text-gold">$FWG</span>
           </DialogTitle>
           <DialogDescription className="text-center">
-            You need more $FWG to place this bet. Pick up tokens on Pump.fun and jump back in.
+            You need more $FWG to place this bet. Pick up tokens on PancakeSwap and jump back in.
           </DialogDescription>
         </DialogHeader>
 
@@ -48,12 +48,12 @@ export function BuyTokensModal() {
         </div>
 
         <a
-          href={PUMP_FUN_URL}
+          href={PANCAKESWAP_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="mt-4 px-5 py-3 rounded-2xl gradient-neon text-background font-black tracking-wide inline-flex items-center justify-center gap-2 shadow-[var(--shadow-neon)] hover:scale-[1.02] transition"
         >
-          BUY $FWG ON PUMP.FUN <ExternalLink className="w-4 h-4" />
+          BUY $FWG ON PANCAKESWAP <ExternalLink className="w-4 h-4" />
         </a>
 
         <button
@@ -64,7 +64,7 @@ export function BuyTokensModal() {
         </button>
 
         <p className="text-[11px] text-muted-foreground text-center mt-1">
-          Demo top-up is for previewing gameplay. Real balances will be read from your $FWG SPL token account on Solana mainnet.
+          Demo top-up is for previewing gameplay. Real balances will be read from your $FWG BEP-20 token account on BNB Smart Chain.
         </p>
       </DialogContent>
     </Dialog>
