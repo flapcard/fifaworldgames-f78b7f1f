@@ -5,7 +5,7 @@ const faqs = [
   { q: "What is FIFA WORLD GAMES?", a: "FIFA WORLD GAMES ($FWG) is a BNB Chain memecoin powering a play-to-earn penalty shootout game launching during the FIFA World Cup 2026 hype season." },
   { q: "How do I earn $FWG?", a: "Connect your wallet, pick a striker, place a bet, and score goals. Successful shots return multiplied $FWG rewards. Missed shots feed the community pool." },
   { q: "Is the game on BNB Chain?", a: "Yes — 100% BNB Chain. Instant payouts, sub-cent fees, and supports MetaMask and Trust Wallet wallets." },
-  { q: "Where can I buy $FWG?", a: "$FWG launches fair on PancakeSwap. After the bonded curve fills, $FWG moves to Raydium where you can swap from any BNB Chain wallet." },
+  { q: "Where can I buy $FWG?", a: "$FWG launches on PancakeSwap as a BEP-20 token. You can swap for it from any BNB Smart Chain wallet like MetaMask or Trust Wallet." },
   { q: "Are developer tokens locked for rewards?", a: "Yes. 100% of developer-allocated tokens are routed into the community reward pool, distributed to active players and top leaderboard finishers." },
   { q: "Is the leaderboard public?", a: "Always. Every score, every payout, every rank — fully public and on-chain." },
   { q: "Will there be tournaments and NFTs?", a: "Phase 3 introduces NFT football skins, PvP tournaments, and seasonal World Cup events with bigger reward pools." },
